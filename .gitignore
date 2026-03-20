@@ -1,0 +1,28 @@
+# Build folders
+build/
+bin/
+out/
+x64/
+Debug/
+Release/
+
+# Compiled objects
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# IDE Specifics
+.vscode/
+.idea/
+*.sln
+*.vcxproj
+*.user
+# from somebody that I used to know...
+*.dev
+
+# System
+.DS_Store
+Thumbs.db
