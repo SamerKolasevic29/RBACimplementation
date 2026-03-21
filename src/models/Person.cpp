@@ -21,8 +21,8 @@ string Person::Password() const { return _password; }
 string Person::Role() const { 
     switch(_role) {
 
-        case ADMIN: return "ADMIN";
-        case WORKER: return "WORKER";
+        case JobRole::ADMIN: return "ADMIN";
+        case JobRole::WORKER: return "WORKER";
         default: return "UNKNOWN";
         
     }
