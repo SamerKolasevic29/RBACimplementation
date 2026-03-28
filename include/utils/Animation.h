@@ -53,6 +53,21 @@ namespace Animation {
         std::cout << "\033[2J\033[H" << std::flush;
     }
 
+    void clearLines(int count) {
+        for (int i = 0; i < count; i++) {
+            std::cout << "\033[F"; // Move up
+            std::cout << "\033[2K"; // Erase line
+        }
+        std::cout << std::flush;
+    }
+
+    void hideCursor(){
+        std::cout << "\033[?25l" << std::flush;
+    }
+    void showCursor(){
+        std::cout << "\033[?25h" << std::flush;
+    }
+
     inline void moveCursor(int row, int col) {
         std::cout << "\033[" << row << ";" << col << "H" << std::flush;
     }
@@ -61,6 +76,8 @@ namespace Animation {
         for(int i = 0; i < count; i++)
             std::cout << ch;
     }
+
+
 
     inline void wait(int s){
         std::this_thread::sleep_for(std::chrono::seconds(s));
@@ -76,6 +93,29 @@ namespace Animation {
             std::this_thread::sleep_for(std::chrono::milliseconds(delay));
         } 
         std::cout << getAnsiCode(WHITE);
+    }
+
+    inline void writeLineX(const std::string s = "", Color c = WHITE, int delay = 100) {
+    std::cout << getAnsiCode(c);
+    for (char ch : s) {
+        std::cout << ch << std::flush; 
+        
+        /* UTF-8 Explanation:
+           In UTF-8, multi-byte characters start with a leading byte (e.g., 1110xxxx)
+           followed by 'continuation bytes' which always start with bits '10'.
+           
+           0xC0 is 11000000 in binary.
+           0x80 is 10000000 in binary.
+           
+           The condition (ch & 0xC0) != 0x80 checks if the byte is NOT a continuation byte.
+           If it's a starting byte or a standard ASCII, we wait.
+           If it's a continuation byte, we skip the wait to keep the character 'together'.
+        */
+        if ((static_cast<unsigned char>(ch) & 0xC0) != 0x80) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+        }
+      } 
+     std::cout << getAnsiCode(WHITE);
     }
 
     inline void writeColumnText(const std::string& s, int width, Color c = WHITE, int delay = 0) {
