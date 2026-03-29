@@ -15,18 +15,24 @@ AuthController::AuthController(const std::string& csvPath)
 
 
 bool AuthController::login() {
+   
     const u_int8_t MAX_ATTEMPTS = 3;
 
     for(uint8_t attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
         Animation::clearScreen();
-        Animation::writeLine("\t\t ---[ LOGIN ( attempts: 1 / " + std::to_string(MAX_ATTEMPTS)  + ")]---\n\n", Animation::BRIGHT_BLUE, 800);
+        
+        Animation::writeLine("\t\t ---[ LOGIN ( attempts: " + std::to_string(attempt) + " / " + std::to_string(MAX_ATTEMPTS)  + ")]---\n\n", Animation::BRIGHT_BLUE, 50);
 
         std::string username, password;
-        Animation::writeLine("Username: ", Animation::BRIGHT_WHITE, 400);
-        getline(std::cin, username);
-        Animation::writeLine("Password", Animation::BRIGHT_WHITE, 400);
-        getline(std::cin, password);
-
+        Animation::writeLine("Username: ", Animation::BRIGHT_WHITE, 50);
+        getline(std::cin >> std::ws, username);
+        Animation::writeLine("Password: ", Animation::BRIGHT_WHITE, 50);
+        std::cout << Animation::getAnsiCode(Animation::BLACK);
+        getline(std::cin >> std::ws, password);
+        std::cout << Animation::getAnsiCode(Animation::BRIGHT_WHITE);
+        for (const Person& p : _cache) {
+    
+        }
         //find potential user
         for (const Person& p : _cache) {
             if (p.Surname() == username &&
@@ -39,7 +45,7 @@ bool AuthController::login() {
                 Tools::writeTXT(
                     Tools::loggerFormat(Tools::dateTimeGenerator(),
                                         username, p.Role(), "LOGIN", "success"),
-                                            "data/log.txt");
+                                            "../data/log.txt");
                 Animation::loading(" Authenticating", 2, 200, Animation::GREEN);
                 return true;
         
@@ -48,8 +54,8 @@ bool AuthController::login() {
            Tools::writeTXT(
            Tools::loggerFormat(Tools::dateTimeGenerator(),
                                 username, "UNKNOWN", "LOGIN", "failed attempt " + std::to_string(attempt)),
-                                                    "data/log.txt");
-            Animation::blinking(" Invalid credentials!", Animation::RED, 400, 2);      
+                                                    "../data/log.txt");
+            Animation::blinking(" Invalid credentials!", Animation::RED, 200, 2);      
     }
 
     Animation::clearScreen();
@@ -65,7 +71,7 @@ void AuthController::logout() {
      Tools::writeTXT(
         Tools::loggerFormat(Tools::dateTimeGenerator(),
                             _currentUser->Surname(), _currentUser->Role(), "LOGOUT"),
-        "data/log.txt"
+        "../data/log.txt"
     );
 
     _currentUser = nullptr; // shared_ptr clears itself
@@ -76,34 +82,34 @@ bool AuthController::registerUser() {
     if(!isAdmin()) return false;
 
     Animation::clearScreen();
-    Animation::writeLine("\t\t ---[ REGISTER NEW USER ]---\n\n" , Animation::BRIGHT_BLUE, 800);
+    Animation::writeLine("\t\t ---[ REGISTER NEW USER ]---\n\n" , Animation::BRIGHT_BLUE, 50);
 
     std::string username, password, roleStr;
-    Animation::writeLine("Username: ", Animation::BRIGHT_WHITE, 400);
-    getline(std::cin, username);
+    Animation::writeLine("Username: ", Animation::BRIGHT_WHITE, 50);
+    getline(std::cin >> std::ws, username);
         for (const Person& p : _cache)
         if (p.Surname() == username) {
             Animation::clearScreen();
-            Animation::writeLine("\n Username already exists!\n", Animation::BRIGHT_RED, 300);
+            Animation::writeLine("\n Username already exists!\n", Animation::BRIGHT_RED, 50);
             Animation::wait(2);
             return false;
         }
 
-    Animation::writeLine("Password (min. 8 characters): ", Animation::BRIGHT_WHITE, 400);
-    getline(std::cin, password);
-        if(password.length() <= 8) {
+    Animation::writeLine("Password (min. 8 characters): ", Animation::BRIGHT_WHITE, 50);
+    getline(std::cin >> std::ws, password);
+        if(password.length() < 8) {
             Animation::clearScreen();
-                Animation::writeLine("\n Password must be at least 8 characters long!\n", Animation::BRIGHT_RED, 300);
+                Animation::writeLine("\n Password must be at least 8 characters long!\n", Animation::BRIGHT_RED, 50);
                 Animation::wait(2);
                 return false;
          }
 
 
-    Animation::writeLine("Role (ADMIN/USER): ", Animation::BRIGHT_WHITE, 400);
-    getline(std::cin, roleStr);
+    Animation::writeLine("Role (ADMIN/WORKER): ", Animation::BRIGHT_WHITE, 50);
+    getline(std::cin >> std::ws, roleStr);
      if(stringToRole(roleStr) == JobRole::UNKNOWN) {
         Animation::clearScreen();
-            Animation::writeLine("\n Wrong Role!\n", Animation::BRIGHT_RED, 300);
+            Animation::writeLine("\n Wrong Role!\n", Animation::BRIGHT_RED, 50);
             Animation::wait(2);
             return false;
      }
@@ -117,9 +123,9 @@ bool AuthController::registerUser() {
         Tools::loggerFormat(Tools::dateTimeGenerator(),
                             _currentUser->Surname(), _currentUser->Role(),
                             "REGISTER", "created user: " + username),
-                                        "data/log.txt" );
+                                        "../data/log.txt" );
         std::cout << "\n";
-        Animation::blinking("                           ---[ FIGHTER CREATION SUCCESSFUL ]---", Animation::BRIGHT_YELLOW, 200, 3);
+        Animation::blinking("                           ---[ PROFILE CREATION SUCCESSFUL ]---", Animation::BRIGHT_YELLOW, 300, 6);
         Animation::wait(2);
         return true;
 }

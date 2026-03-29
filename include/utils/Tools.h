@@ -21,7 +21,7 @@ namespace Tools {
 
  // Logger format
     std::string loggerFormat(const std::string& dateTime, const std::string& username, 
-                             const std::string& role, const std::string action, 
+                             const std::string& role, const std::string& action, 
                              const std::string& details = "");   
 
 

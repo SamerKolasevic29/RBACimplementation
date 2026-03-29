@@ -7,9 +7,9 @@
 
 class AuthController {
 private:
-    std::vector<Person>       _cache;
-    std::shared_ptr<Person>   _currentUser;
-    std::string               _csvPath;
+    std::vector<Person>  _cache;
+    std::shared_ptr<Person>  _currentUser;
+    std::string  _csvPath;
 
 public:
     AuthController(const std::string& csvPath);

@@ -53,7 +53,7 @@ namespace Animation {
         std::cout << "\033[2J\033[H" << std::flush;
     }
 
-    void clearLines(int count) {
+    inline void clearLines(int count) {
         for (int i = 0; i < count; i++) {
             std::cout << "\033[F"; // Move up
             std::cout << "\033[2K"; // Erase line
@@ -61,10 +61,10 @@ namespace Animation {
         std::cout << std::flush;
     }
 
-    void hideCursor(){
+    inline void hideCursor(){
         std::cout << "\033[?25l" << std::flush;
     }
-    void showCursor(){
+    inline void showCursor(){
         std::cout << "\033[?25h" << std::flush;
     }
 

@@ -14,7 +14,7 @@ namespace UI {
 
 void loadingCSV(bool loaded){
         clearScreen();
-        writeLine("Loading fighters...   ", CYAN, 50);
+        writeLine("Fetching data from server...   ", CYAN, 50);
         bar(8, BRIGHT_CYAN, 100);
         
         if(loaded) {
@@ -31,9 +31,9 @@ void loadingCSV(bool loaded){
         }
     }
 
-inline void printLogo() {
+void printLogo() {
     clearScreen();
-
+    hideCursor();
     // using new writeLineX() for dealing with UTF-8 symbols
     std::string s = R"(██████╗ ██████╗  █████╗  ██████╗              ███████╗██╗   ██╗███████╗)";
     writeLineX("\n\t  " + s + "\n", BRIGHT_CYAN, 17);
@@ -49,7 +49,7 @@ inline void printLogo() {
     writeLineX("\t  " + s + "\n", MAGENTA, 17);
 }
 
-inline void appearLogo() {
+void appearLogo() {
     hideCursor();
     std::cout << getAnsiCode(BRIGHT_CYAN) << "\n\t  "
     << R"(██████╗ ██████╗  █████╗  ██████╗              ███████╗██╗   ██╗███████╗)"
@@ -65,57 +65,57 @@ inline void appearLogo() {
     << R"(╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝              ╚══════╝   ╚═╝   ╚══════╝)";
 }  
 
-void firstUserMenu(const std::string& name) {
-    writeLine("\n\n\t\t\t\t   WELCOME, ", BRIGHT_WHITE, 20); writeLine(name, BRIGHT_CYAN,20); writeLine("!", BRIGHT_WHITE, 20); 
+void firstWorkerMenu(const std::string& name) {
+    writeLine("\n\n\t\t\t\t     WELCOME, ", BRIGHT_WHITE, 20); writeLine(name, BRIGHT_CYAN,20); writeLine("!", BRIGHT_WHITE, 20); 
     writeLine("\n\t\t -------------------------------------------------------\n", MAGENTA, 15);
-    writeLine("\n\t\t\t   View content from board.txt", BRIGHT_WHITE, 20); writeLine(" --- ", WHITE, 20);
+    writeLine("\n\t\t\t     View content from board.txt", BRIGHT_WHITE, 20); writeLine(" --- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("1", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
-    writeLine("\n\t\t\t   Edit content from board.txt", BRIGHT_WHITE, 20); writeLine(" --- ", WHITE, 20);
+    writeLine("\n\t\t\t     Edit content from board.txt", BRIGHT_WHITE, 20); writeLine(" --- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("2", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);  
-    writeLine("\n\t\t\t\t\tLog out", BRIGHT_WHITE, 20); writeLine("  --------  ", WHITE, 20);
+    writeLine("\n\t\t\t\t         Log out", BRIGHT_WHITE, 20); writeLine("  ---------  ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("0", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
 }
 
-void userMenu() {
+void workerMenu() {
     writeLine("\n\t\t -------------------------------------------------------\n", MAGENTA, 1);
-    writeLine("\n\t\t\t   View content from board.txt", BRIGHT_WHITE, 5); writeLine(" --- ", WHITE, 5);
+    writeLine("\n\t\t\t     View content from board.txt", BRIGHT_WHITE, 5); writeLine(" --- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("1", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
-    writeLine("\n\t\t\t   Edit content from board.txt", BRIGHT_WHITE, 5); writeLine(" --- ", WHITE, 5);
+    writeLine("\n\t\t\t     Edit content from board.txt", BRIGHT_WHITE, 5); writeLine(" --- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("2", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);  
-    writeLine("\n\t\t\t\t\tLog out", BRIGHT_WHITE, 5); writeLine("  --------  ", WHITE, 5);
+    writeLine("\n\t\t\t\t         Log out", BRIGHT_WHITE, 5); writeLine("  ---------  ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("0", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
 }
 
 void firstAdminMenu(const std::string& name) {
-    writeLine("\n\n\t\t\t\t   WELCOME, ", BRIGHT_WHITE, 20); writeLine(name, BRIGHT_CYAN,20); writeLine("!", BRIGHT_WHITE, 20); 
+    writeLine("\n\n\t\t\t\t     WELCOME, ", BRIGHT_WHITE, 20); writeLine(name, BRIGHT_CYAN,20); writeLine("!", BRIGHT_WHITE, 20); 
     writeLine("\n\t\t -------------------------------------------------------\n", MAGENTA, 15);
-    writeLine("\n\t\t\t\t  Read logs from log.txt", BRIGHT_WHITE, 20); writeLine(" ------- ", WHITE, 20);
+    writeLine("\n\t\t\t\t Read logs from log.txt", BRIGHT_WHITE, 20); writeLine(" ------- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("1", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
-    writeLine("\n\t\t\t\tView content from board.txt", BRIGHT_WHITE, 20); writeLine(" ---- ", WHITE, 20);
+    writeLine("\n\t\t\t       View content from board.txt", BRIGHT_WHITE, 20); writeLine(" ---- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("2", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);  
-    writeLine("\n\t\t\t\t    View profiles list", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
+    writeLine("\n\t\t\t\t   View profiles list", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("3", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
-    writeLine("\n\t\t\t\t   Register a new user", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
+    writeLine("\n\t\t\t\t  Register a new user", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("4", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
-    writeLine("\n\t\t\t\t    Change user's role", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
+    writeLine("\n\t\t\t\t   Change user's role", BRIGHT_WHITE, 20); writeLine(" --------- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("5", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
-    writeLine("\n\t\t\t\t\t Log out", BRIGHT_WHITE, 20); writeLine("  -------------- ", WHITE, 20);
+    writeLine("\n\t\t\t\t\tLog out", BRIGHT_WHITE, 20); writeLine("  -------------- ", WHITE, 20);
     writeLine("[", BLUE, 20); writeLine("0", BRIGHT_CYAN, 20); writeLine("]", BLUE, 20);
 }
 
 void adminMenu() {
     writeLine("\n\t\t -------------------------------------------------------\n", MAGENTA, 1);
-    writeLine("\n\t\t\t\t  Read logs from log.txt", BRIGHT_WHITE, 5); writeLine(" ------- ", WHITE, 5);
+    writeLine("\n\t\t\t\t Read logs from log.txt", BRIGHT_WHITE, 5); writeLine(" ------- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("1", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
-    writeLine("\n\t\t\t\tView content from board.txt", BRIGHT_WHITE, 5); writeLine(" ---- ", WHITE, 5);
+    writeLine("\n\t\t\t       View content from board.txt", BRIGHT_WHITE, 5); writeLine(" ---- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("2", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);  
-    writeLine("\n\t\t\t\t    View profiles list", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
+    writeLine("\n\t\t\t\t   View profiles list", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("3", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
-    writeLine("\n\t\t\t\t   Register a new user", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
+    writeLine("\n\t\t\t\t  Register a new user", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("4", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
-    writeLine("\n\t\t\t\t    Change user's role", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
+    writeLine("\n\t\t\t\t   Change user's role", BRIGHT_WHITE, 5); writeLine(" --------- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("5", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
-    writeLine("\n\t\t\t\t\t Log out", BRIGHT_WHITE, 5); writeLine("  -------------- ", WHITE, 5);
+    writeLine("\n\t\t\t\t\tLog out", BRIGHT_WHITE, 5); writeLine("  -------------- ", WHITE, 5);
     writeLine("[", BLUE, 5); writeLine("0", BRIGHT_CYAN, 5); writeLine("]", BLUE, 5);
 }
 
@@ -136,7 +136,7 @@ void adminMenu() {
             // Validation logic
             int valid = 255;
             switch(m){
-                case FormContext::USER_MENU:
+                case FormContext::WORKER_MENU:
                     if(choice >= 0 && choice <= 2) valid = choice;
                     break;
 

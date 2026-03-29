@@ -9,7 +9,7 @@
 
 namespace UI {
 
-    void usersInfo(const std::vector<std::unique_ptr<Person>>& roster);
+    void usersInfo(const std::vector<Person>& roster);
 
 }
 
